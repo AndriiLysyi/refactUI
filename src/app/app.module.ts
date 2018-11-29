@@ -22,8 +22,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material.module';
 
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule , MatButtonModule, MatSidenavModule } from '@angular/material';
+import { MatToolbarModule , MatButtonModule, MatSidenavModule } from '@angular/material'
+;
 import { LayoutComponent } from './layout/layout.component'
+import { AceEditorModule } from 'ng2-ace-editor';
 @NgModule({
     imports: [
         BrowserModule,
@@ -39,7 +41,8 @@ import { LayoutComponent } from './layout/layout.component'
         MatSidenavModule ,
         MatIconModule,
         MatListModule,
-        DemoMaterialModule
+        DemoMaterialModule,
+        AceEditorModule
     ],
         
     declarations: [
@@ -47,7 +50,8 @@ import { LayoutComponent } from './layout/layout.component'
         AlertComponent,
         HomeComponent,
         LoginComponent,
-        RegisterComponent,
+        RegisterComponent
+,
         LayoutComponent
 ,
     ],
