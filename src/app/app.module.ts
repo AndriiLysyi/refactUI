@@ -25,7 +25,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule , MatButtonModule, MatSidenavModule } from '@angular/material'
 ;
 import { LayoutComponent } from './layout/layout.component'
-import { AceEditorModule } from 'ng2-ace-editor';
+import { AceEditorModule } from 'ng2-ace-editor';;
+import { CodeEditorComponent } from './code-editor/code-editor.component'
 @NgModule({
     imports: [
         BrowserModule,
@@ -52,7 +53,8 @@ import { AceEditorModule } from 'ng2-ace-editor';
         LoginComponent,
         RegisterComponent
 ,
-        LayoutComponent
+        LayoutComponent,
+        CodeEditorComponent
 ,
     ],
     providers: [
