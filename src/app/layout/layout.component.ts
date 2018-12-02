@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, OnDestroy, Component, AfterViewInit} from '@angular/core';
 
+import { distinctUntilChanged, delay } from 'rxjs/operators';
 import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
@@ -16,12 +17,13 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
-
-    this.authService.isLoggedIn.subscribe( state=> {
-      this.islogged = state;
-    }
-      
+   
+    this.authService.isLoggedIn.pipe(distinctUntilChanged(), delay(0)).subscribe(
+     res=> {
+      this.islogged = res;
+      console.log(res);
+      }
+    ); 
   }
   
  

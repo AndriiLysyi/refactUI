@@ -25,15 +25,19 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule , MatButtonModule, MatSidenavModule } from '@angular/material'
 ;
 import { LayoutComponent } from './layout/layout.component'
-import { AceEditorModule } from 'ng2-ace-editor';;
+import { AceEditorModule } from 'ng2-ace-editor';
 import { CodeEditorComponent } from './code-editor/code-editor.component'
+import { ChartsModule } from 'ng2-charts';
+;
+import { ProfileEditorComponent } from './profile-editor/profile-editor.component'
+;
+import { ChartComponent } from './chart/chart.component';
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
-        routing
-,
+        routing,
         BrowserAnimationsModule
 ,
         LayoutModule ,
@@ -43,7 +47,8 @@ import { CodeEditorComponent } from './code-editor/code-editor.component'
         MatIconModule,
         MatListModule,
         DemoMaterialModule,
-        AceEditorModule
+        ChartsModule,
+        AceEditorModule,
     ],
         
     declarations: [
@@ -53,9 +58,12 @@ import { CodeEditorComponent } from './code-editor/code-editor.component'
         LoginComponent,
         RegisterComponent
 ,
-        LayoutComponent,
+        LayoutComponent
+,
         CodeEditorComponent
 ,
+        ProfileEditorComponent,
+        ChartComponent
     ],
     providers: [
         AuthGuard,
