@@ -21,7 +21,6 @@ export class LayoutComponent implements AfterViewInit {
     this.authService.isLoggedIn.pipe(distinctUntilChanged(), delay(0)).subscribe(
      res=> {
       this.islogged = res;
-      console.log(res);
       }
     ); 
   }

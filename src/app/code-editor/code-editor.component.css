@@ -4,3 +4,8 @@
     width: 100%;
     overflow: auto;
   }
+
+  .code-flex-container {
+    display: flex;
+    justify-content: center;
+  }
