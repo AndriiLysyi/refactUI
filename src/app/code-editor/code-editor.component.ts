@@ -7,25 +7,17 @@ declare let ace: any;
   styleUrls: ['./code-editor.component.css']
 })
 export class CodeEditorComponent implements AfterViewInit {
-  content = '<strong>Hi</strong>';
-  contentAutoUpdate = 'SELECT * FROM autoUpdate;';
-  myCode = 'SELECT * FROM tabs;';
-  @ViewChild('highlight') highlight;
-  @ViewChild('editorInfinity') editorInfinity;
-  @ViewChild('firstEditor') firstEditor;
+  myCode = 'for(var i=0; i<100; i++) {\nfunction(variable){\nt}\n\n}';
+  @ViewChild('codeEditor') codeEditor;
 
   onRuleChange(e) {
-    console.log(e);
+    console.log(e.toString());
   }
 
   ngAfterViewInit() {
-    const Range = ace.require('ace/range')['Range'];
-
-    this.highlight
-      .getEditor()
-      .session.addMarker(new Range(0, 0, 2, 1), 'myMarker', 'fullLine');
-
-    this.firstEditor.getEditor().session.setOption('useWorker', true);
+    //const Range = ace.require('ace/range')['Range'];
+    const editor = this.codeEditor.getEditor();
+    editor.getSession().setMode("ace/mode/javascript");   
   }
 
 }

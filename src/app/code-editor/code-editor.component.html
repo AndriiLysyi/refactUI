@@ -15,10 +15,11 @@ style="min-height: 200px; width:100%; overflow: auto;"
 <h1>NgModel</h1> -->
 <div class="code-flex-container">
     <ace-editor [(text)]="myCode" 
-                [mode]="'javascript'"
-                style="min-height: 200px; width:60%; overflow: auto;"></ace-editor>
+      #codeEditor      
+      (textChanged)="onRuleChange($event)"
+      style="min-height: 200px; width:60%; overflow: auto;"></ace-editor>
     <ace-editor [text]="myCode"
                 [readOnly]="true"
-                [theme]="'light'" style="min-height: 200px; width:40%; overflow: auto;"></ace-editor>
+                style="min-height: 200px; width:40%; overflow: auto;"></ace-editor>
 </div>
 
