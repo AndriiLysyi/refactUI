@@ -8,23 +8,28 @@ import { User } from '../_models';
 export class UserService {
     constructor(private http: HttpClient) { }
 
+    getCurrentUserId(): string{
+        let currentUser: User = JSON.parse(localStorage.getItem('currentUser')) || null;
+        return currentUser? currentUser.id : null;
+    }
+    
     getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
+        return this.http.get<User[]>(`${environment.apiUrl}users`);
     }
 
-    getById(id: number) {
-        return this.http.get(`${environment.apiUrl}/users/` + id);
+    getById(id: string) {
+        return this.http.get(`${environment.apiUrl}users/?id=${id}`);
     }
 
     register(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/register`, user);
+        return this.http.post(`${environment.apiUrl}users/register`, user);
     }
 
     update(user: User) {
-        return this.http.put(`${environment.apiUrl}/users/` + user.id, user);
+        return this.http.put(`${environment.apiUrl}users/` + user.id, user);
     }
 
-    delete(id: number) {
-        return this.http.delete(`${environment.apiUrl}/users/` + id);
+    delete(id: string) {
+        return this.http.delete(`${environment.apiUrl}users/` + id);
     }
 }

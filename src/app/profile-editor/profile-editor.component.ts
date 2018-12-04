@@ -15,7 +15,7 @@ export class ProfileEditorComponent implements OnInit {
   profileEditorForm: FormGroup;
   loading = false;
   submitted = false;
-  user: User = { id: 0, firstName: "monster", lastName: 'Cat', password: 'asdsadww', username: 'Nagibator777' };
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,15 +25,29 @@ export class ProfileEditorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
+    this.userService.getById(this.userService.getCurrentUserId())
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.profileEditorForm.patchValue(data[0]);
+          this.loading = false;
+          console.log(data);
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        });
+
     this.profileEditorForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmpassword: ['', [Validators.required, Validators.minLength(6)]]
     }, { validator: this.passwordMatchValidator });
 
-    this.profileEditorForm.patchValue(this.user);
+
   }
 
   // convenience getter for easy access to form fields
@@ -59,26 +73,27 @@ export class ProfileEditorComponent implements OnInit {
       return;
     }
     const tempUser: User = {
-      id: this.user.id,
+      id: this.userService.getCurrentUserId(),
       firstName: this.profileEditorForm.value.firstName,
       lastName: this.profileEditorForm.value.lastName,
       password: this.profileEditorForm.value.password,
-      username: this.profileEditorForm.value.username
+      email: this.profileEditorForm.value.email,
+      authToken: '',
+      role: ''
     };
 
-      console.log(tempUser);
-      console.log("OKKKK");
-      // this.loading = true;
-      // this.userService.register(this.profileEditorForm.value)
-      //   .pipe(first())
-      //   .subscribe(
-      //     data => {
-      //       this.alertService.success('Registration successful', true);
-      //       this.router.navigate(['/login']);
-      //     },
-      //     error => {
-      //       this.alertService.error(error);
-      //       this.loading = false;
-      //     });
-    }
+    console.log(tempUser);
+    console.log("OKKKK");
+    this.loading = true;
+    // this.userService.getById(this.userService.getCurrentUserId())
+    //   .pipe(first())
+    //   .subscribe(
+    //     data => {
+    //       this.profileEditorForm.patchValue(data);
+    //     },
+    //     error => {
+    //       this.alertService.error(error);
+    //       this.loading = false;
+    //     });
   }
+}
