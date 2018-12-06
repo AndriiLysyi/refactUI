@@ -9,3 +9,11 @@
     display: flex;
     justify-content: center;
   }
+
+  .pull-right {
+    float: right;
+  }
+
+  .right-content {
+    margin: 20px 10px 0 0;
+  }

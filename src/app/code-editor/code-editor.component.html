@@ -1,25 +1,25 @@
-<!-- <h1>
-  Basic
-</h1>
-<ace-editor #firstEditor [text]="content" (textChanged)="onRuleChange($event)" [autoUpdateContent]="true" 
-style="min-height: 200px; width:100%; overflow: auto;"
-  mode="html"></ace-editor>
-<div ace-editor [text]="content" class="aceEditorDirective" mode="sql"></div>
-<h2>Highlight</h2>
-<ace-editor #highlight [text]="content" mode="sql" style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
-<h2>Auto update</h2>
-<ace-editor [(text)]="contentAutoUpdate" mode="sql" style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
-<div ace-editor [(text)]="contentAutoUpdate" mode="sql" style="min-height: 200px; width:100%; overflow: auto;"></div>
-<h1>Auto height</h1>
-<ace-editor #editorInfinity [text]="content" [options]="{maxLines: 'Infinity'}" style="min-height: 50px; width:100%;"></ace-editor>
-<h1>NgModel</h1> -->
+<h1>Завдання</h1>
+<p>
+  Правиш код, відправляєш  
+</p>
 <div class="code-flex-container">
     <ace-editor [(text)]="myCode" 
       #codeEditor      
-      (textChanged)="onRuleChange($event)"
-      style="min-height: 200px; width:60%; overflow: auto;"></ace-editor>
-    <ace-editor [text]="myCode"
-                [readOnly]="true"
-                style="min-height: 200px; width:40%; overflow: auto;"></ace-editor>
+      [readOnly] = "isResultingPage"
+      style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
+    <ace-editor 
+      *ngIf="isResultingPage"
+      [text]="errorResponse"
+      #errorEditor
+      readOnly="true"
+      style="min-height: 200px; width:40%; overflow: auto;"></ace-editor>
+</div>
+<div class="pull-right code-flex-container ">
+  <div class="right-content">timer</div>
+  <input type="button" 
+  class="right-content "
+  (click)="sendAnswer()" 
+  *ngIf="!isResultingPage"
+  value="Відправити відповідь">
 </div>
 

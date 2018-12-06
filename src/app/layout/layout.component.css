@@ -33,4 +33,16 @@
   .example-spacer {
     flex: 1 1 auto;
   }
+
+  .layout-flex-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .layout-flex-content {
+    flex: 0 0 100%;
+    max-width: 900px;
+  }
+  
   
