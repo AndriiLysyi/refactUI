@@ -15,11 +15,12 @@
       style="min-height: 200px; width:40%; overflow: auto;"></ace-editor>
 </div>
 <div class="pull-right code-flex-container ">
-  <div class="right-content">timer</div>
+  
   <input type="button" 
   class="right-content "
   (click)="sendAnswer()" 
   *ngIf="!isResultingPage"
   value="Відправити відповідь">
+  <h3 class="right-content timer">{{minutesLeft}}:{{secondsLeft}}</h3>
 </div>
 

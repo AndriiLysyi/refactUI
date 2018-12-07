@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, AfterContentInit } from '@angular/core';
 declare let ace: any;
 
 @Component({
@@ -6,7 +6,29 @@ declare let ace: any;
   templateUrl: './code-editor.component.html',
   styleUrls: ['./code-editor.component.css']
 })
-export class CodeEditorComponent implements AfterViewInit {
+export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
+  
+  secondsLeft: number = 30;
+  minutesLeft: number = 2;
+  timerThreadId;
+
+  ngAfterContentInit(): void {
+    if (!this.isResultingPage) {
+      this.timerThreadId = setInterval(()=> {
+        if (this.secondsLeft) {
+          this.secondsLeft--;          
+        } else if (this.minutesLeft) {
+          this.minutesLeft--;
+          this.secondsLeft = 59;
+        } else {
+          //post to server
+          this.sendAnswer();
+          clearInterval(this.timerThreadId);
+        }
+      }, 1000);
+    }    
+  }
+  
   myCode = 'for(var i=0; i<100; i++) {\nfunction(variable){\nt}\n\n}';
   errorResponse = "brackets are not closed\n\n\n\n\n\n\n\n\n\nthat's all";
   isResultingPage = false;
@@ -44,6 +66,7 @@ export class CodeEditorComponent implements AfterViewInit {
   sendAnswer() {
     this.isResultingPage = true;
     setTimeout(()=>this.initErrorEditor(), 0);
+    clearInterval(this.timerThreadId);
     
   }
 }
