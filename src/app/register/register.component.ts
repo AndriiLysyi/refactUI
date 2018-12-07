@@ -11,7 +11,7 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
-    user : User =  {authToken:'',email:'',firstName:'',id:'',lastName:'', password:'',phoneNumber:'0000000',role:'' };
+    user : User= new User() ;  //{authToken:'',email:'',firstName:'',id:'',lastName:'', password:'',phoneNumber:'0000000',role:'' };
 
     constructor(
         private formBuilder: FormBuilder,
@@ -24,8 +24,9 @@ export class RegisterComponent implements OnInit {
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            password: ['', [Validators.required, Validators.minLength(8)]]
         });
+        this.user.phoneNumber = '0000000';
 
     }
 
