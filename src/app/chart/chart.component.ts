@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AlertService, AuthenticationService, UserService } from '../_services';
+
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -7,20 +9,87 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChartComponent implements OnInit {
   
+  constructor( private userService : UserService){
+    this.userService.getById(this.userService.getCurrentUserId()).subscribe(data=> {
+      console.log(data);
+      this.setData2(data);
+      this.setData(data);
+    });
+  }
   ngOnInit(){}
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
   };
-  public barChartLabels: string[] = ['20.11.2018', '22.11.2018', '23.11.2018', '24.11.2018', '25.11.2018', '26.11.2018', '27.11.2018'];
-  public barChartType: string = 'bar';
+  public barChartLabels: string[]=[];
+  public barChartType: string = 'line';
   public barChartLegend: boolean = true;
+  public times : string[]=[];
+  public mistakes : any[]=[];  
 
   public barChartData: any[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Спроба 1' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Спроба 2' },
-    { data: [, , , 75, 56, 55, 40], label: 'Спроба 3' }
+    { data: [], label: 'Кількість помилок' }
   ];
+
+////2 chart
+public barChartOptions2: any = {
+  scaleShowVerticalLines: false,
+  responsive: true
+};
+public barChartLabels2: string[]=[];
+public barChartType2: string = 'line';
+public barChartLegend2: boolean = true;
+
+public barChartData2: any[] = [
+
+  { data: [], label: 'Час виконання ' }
+];
+
+
+
+  setData(data: any) {
+let temp = JSON.parse(JSON.stringify(this.barChartData));
+let labels = [];// JSON.parse(JSON.stringify(this.barChartLabels));
+labels.length = data.taskStory.length;
+temp[0].data.length = 0;
+//temp[1].data.length = 0;
+this.barChartLabels.length = 0;
+    for(var _i = 0; _i < data.taskStory.length; _i++ )
+    {
+      
+      this.barChartLabels.push(`${_i+1} спроба`);
+   // temp[1].data[_i] = data.taskStory[_i].time;
+    temp[0].data[_i] = data.taskStory[_i].mistakes.length;
+    }
+    debugger
+    console.log(temp);
+    console.log(labels);
+    //this.barChartLabels.labels;
+    this.barChartData = temp;
+  }
+
+  setData2(data: any) {
+    let temp = JSON.parse(JSON.stringify(this.barChartData));
+    let labels = [];// JSON.parse(JSON.stringify(this.barChartLabels));
+    labels.length = data.taskStory.length;
+    temp[0].data.length = 0;
+   // temp[1].data.length = 0;
+    this.barChartLabels2.length = 0;
+        for(var _i = 0; _i < data.taskStory.length; _i++ )
+        {
+          
+          this.barChartLabels2.push(`${_i+1} спроба`);
+        temp[0].data[_i] = data.taskStory[_i].time;
+       // temp[0].data[_i] = data.taskStory[_i].mistakes.length;
+        }
+        debugger
+        console.log(temp);
+        console.log(labels);
+        //this.barChartLabels.labels;
+        this.barChartData2 = temp;
+      }
+    
+
 
   // events
   public chartClicked(e: any): void {
