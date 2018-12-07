@@ -30,6 +30,12 @@ export class ChartComponent implements OnInit {
   public barChartData: any[] = [
     { data: [], label: 'Кількість помилок' }
   ];
+  public chartColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: ['#55a']
+    }
+];
+
 
 ////2 chart
 public barChartOptions2: any = {
@@ -69,7 +75,7 @@ this.barChartLabels.length = 0;
   }
 
   setData2(data: any) {
-    let temp = JSON.parse(JSON.stringify(this.barChartData));
+    let temp = JSON.parse(JSON.stringify(this.barChartData2));
     let labels = [];// JSON.parse(JSON.stringify(this.barChartLabels));
     labels.length = data.taskStory.length;
     temp[0].data.length = 0;

@@ -10,11 +10,12 @@ import { forEach } from '@angular/router/src/utils/collection';
   templateUrl: './code-editor.component.html',
   styleUrls: ['./code-editor.component.css']
 })
-export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
+export class CodeEditorComponent implements AfterViewInit , AfterContentInit {
   
   secondsLeft: number = 30;
   minutesLeft: number = 2;
   timerThreadId;
+  code = "waiting for server....";
 
   ngAfterContentInit(): void {
     if (!this.isResultingPage) {
@@ -47,22 +48,24 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
 
   constructor(private taskService: TaskService,
     private router:Router) {
-      this.task.code = "waiting for server...";
-   
+    
 
     
   }
 
-  ngAfterViewInit() {      
+  ngAfterViewInit() {  
+  
     const editor = this.codeEditor.getEditor();
     editor.setShowPrintMargin(false);    
     editor.getSession().setMode("ace/mode/javascript"); 
     
     var component = this;
     this.taskService.getTask().subscribe( data=>{
-      debugger
+    setTimeout(()=>{
       let taskNumber = Math.round(Math.random()* data.length);
-      component.task = data[taskNumber > data.length ? data.length : taskNumber];
+      component.task = data[taskNumber ];
+      this.code =  data[taskNumber].code;
+    },0);
     });
   }
 
@@ -83,7 +86,7 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
   sendAnswer() {
     this.taskService.register({
       taskId: this.task.id,
-      code: this.task.code,
+      code: this.code,
       time: 150 - (this.secondsLeft+ this.minutesLeft*60)
     }).subscribe(data=>{
       let line = 1;
