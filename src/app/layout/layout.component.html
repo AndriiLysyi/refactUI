@@ -1,18 +1,18 @@
 <div class="example-container"  >
   <mat-toolbar  color="primary" class="example-toolbar">
     <button *ngIf="islogged"  mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">Refactory module</h1>
+    <h1 class="example-app-name">Модуль рефакторингу</h1>
     <span class="example-spacer"></span>
-    <button *ngIf="islogged" mat-button (click)="authService.logout()">logout</button>
+    <button *ngIf="islogged" mat-button (click)="authService.logout()">Вийти</button>
   </mat-toolbar>
 
   <mat-sidenav-container [hasBackdrop]="false" autosize class="example-sidenav-container"
                          >
     <mat-sidenav #snav [mode]="'over'">
       <mat-nav-list (click)="snav.toggle()">
-        <a mat-list-item [routerLink]="['/editor']" >Get Task</a>
-        <a mat-list-item [routerLink]="['/stat']" >Results</a>
-        <a mat-list-item [routerLink]="['/profile']" >Edit profile</a>
+        <a mat-list-item [routerLink]="['/editor']" >Перейти до виконання завдання</a>
+        <a mat-list-item [routerLink]="['/stat']" >Статистика</a>
+        <a mat-list-item [routerLink]="['/profile']" >Мій Профіль</a>
       </mat-nav-list>
     </mat-sidenav>
     
