@@ -6,4 +6,5 @@
     authToken: string;
     role: string;
     lastName: string;
+    phoneNumber: string;
 }

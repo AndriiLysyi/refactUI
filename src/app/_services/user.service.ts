@@ -18,15 +18,15 @@ export class UserService {
     }
 
     getById(id: string) {
-        return this.http.get(`${environment.apiUrl}users/?id=${id}`);
+        return this.http.get(`${environment.apiUrl}users/${id}`);
     }
 
     register(user: User) {
-        return this.http.post(`${environment.apiUrl}users/register`, user);
+        return this.http.post(`${environment.apiUrl}users`, user);
     }
 
     update(user: User) {
-        return this.http.put(`${environment.apiUrl}users/` + user.id, user);
+        return this.http.put(`${environment.apiUrl}users`, user);
     }
 
     delete(id: string) {

@@ -9,7 +9,7 @@
   <mat-sidenav-container [hasBackdrop]="false" autosize class="example-sidenav-container"
                          >
     <mat-sidenav #snav [mode]="'over'">
-      <mat-nav-list>
+      <mat-nav-list (click)="snav.toggle()">
         <a mat-list-item [routerLink]="['/editor']" >Get Task</a>
         <a mat-list-item [routerLink]="['/stat']" >Results</a>
         <a mat-list-item [routerLink]="['/profile']" >Edit profile</a>

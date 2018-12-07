@@ -15,7 +15,7 @@ export class ProfileEditorComponent implements OnInit {
   profileEditorForm: FormGroup;
   loading = false;
   submitted = false;
-
+  user;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,8 +30,9 @@ export class ProfileEditorComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.profileEditorForm.patchValue(data[0]);
+          this.profileEditorForm.patchValue(data);
           this.loading = false;
+          this.user = data;
           console.log(data);
         },
         error => {
@@ -72,28 +73,30 @@ export class ProfileEditorComponent implements OnInit {
       console.log('invalid');
       return;
     }
-    const tempUser: User = {
-      id: this.userService.getCurrentUserId(),
-      firstName: this.profileEditorForm.value.firstName,
-      lastName: this.profileEditorForm.value.lastName,
-      password: this.profileEditorForm.value.password,
-      email: this.profileEditorForm.value.email,
-      authToken: '',
-      role: ''
-    };
 
-    console.log(tempUser);
+
+    this.user.firstName = this.profileEditorForm.value.firstName;
+    this.user.lastName = this.profileEditorForm.value.lastName;
+    this.user.password = this.profileEditorForm.value.password;
+    this.user.email = this.profileEditorForm.value.email;
+
+
+    console.log(this.user);
     console.log("OKKKK");
     this.loading = true;
-    // this.userService.getById(this.userService.getCurrentUserId())
-    //   .pipe(first())
-    //   .subscribe(
-    //     data => {
-    //       this.profileEditorForm.patchValue(data);
-    //     },
-    //     error => {
-    //       this.alertService.error(error);
-    //       this.loading = false;
-    //     });
+    debugger
+    this.userService.update(this.user)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.profileEditorForm.patchValue(data);
+          this.loading = false;
+          this.router.navigate(['']);
+          debugger
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        });
   }
 }
