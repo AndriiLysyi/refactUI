@@ -82,13 +82,12 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
       let line = 1;
       let errorString="";
       data.mistakes.forEach(el=>{
-        if (el.line>line) {
+        while (el.line>line) {
           line++;
           errorString+="\n";
 
-        } else {
-          errorString+=el.description+"; ";
         }
+        errorString+=el.description+" ";
       });
       this.errorString = errorString;
     });
