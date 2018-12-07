@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import {Task} from '../_models/task';
+import {TaskResult} from '../_models/taskResult';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class TaskService {
   }
 
   register(task: any) {
-      return this.http.post(`${environment.apiUrl}tasks/process`, task);
+      return this.http.post<TaskResult>(`${environment.apiUrl}tasks/process`, task);
   }
 
 }

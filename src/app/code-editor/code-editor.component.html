@@ -1,26 +1,27 @@
-<h1>Завдання</h1>
-<p>
-  Правиш код, відправляєш  
-</p>
-<div class="code-flex-container">
-    <ace-editor [(text)]="myCode" 
-      #codeEditor      
-      [readOnly] = "isResultingPage"
-      style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
-    <ace-editor 
-      *ngIf="isResultingPage"
-      [text]="errorResponse"
-      #errorEditor
-      readOnly="true"
-      style="min-height: 200px; width:40%; overflow: auto;"></ace-editor>
+<div class="editor-wide-container">
+  <h1>Завдання</h1>
+  <p>
+    За відведений час необхідно виправити всі можливі синтаксичні та стилістичні помилки в наданому коді.  
+  </p>
+  <div class="code-flex-container">
+      <ace-editor [(text)]="task.code" 
+        #codeEditor      
+        [readOnly] = "isResultingPage"
+        style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
+      <ace-editor 
+        *ngIf="isResultingPage"
+        [text]="errorString"
+        #errorEditor
+        readOnly="true"
+        style="min-height: 200px; width:100%; overflow: auto;"></ace-editor>
+  </div>
+  <div class="pull-right code-flex-container ">
+    
+    <input type="button" 
+    class="right-content "
+    (click)="sendAnswer()" 
+    *ngIf="!isResultingPage"
+    value="Відправити відповідь">
+    <h3 class="right-content timer">{{minutesLeft}}:{{secondsLeft}}</h3>
+  </div>  
 </div>
-<div class="pull-right code-flex-container ">
-  
-  <input type="button" 
-  class="right-content "
-  (click)="sendAnswer()" 
-  *ngIf="!isResultingPage"
-  value="Відправити відповідь">
-  <h3 class="right-content timer">{{minutesLeft}}:{{secondsLeft}}</h3>
-</div>
-

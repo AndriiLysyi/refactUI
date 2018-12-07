@@ -21,3 +21,10 @@
   .timer {
     color: darkcyan;
   }
+
+  .editor-wide-container {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 6%;
+  }

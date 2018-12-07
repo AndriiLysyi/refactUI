@@ -1,5 +1,8 @@
 import { Component, ViewChild, AfterViewInit, AfterContentInit } from '@angular/core';
-declare let ace: any;
+import {TaskService} from '../_services/task.service';
+import {Task} from "../_models/task";
+import {TaskResult, Mistake} from '../_models/taskResult';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-code-editor',
@@ -29,8 +32,9 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
     }    
   }
   
-  myCode = 'for(var i=0; i<100; i++) {\nfunction(variable){\nt}\n\n}';
-  errorResponse = "brackets are not closed\n\n\n\n\n\n\n\n\n\nthat's all";
+  task: Task;
+  mistakes: Mistake[];
+  errorString: string ="";
   isResultingPage = false;
 
   @ViewChild('codeEditor') codeEditor;
@@ -40,6 +44,12 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
     console.log(e.toString());
   }
 
+  constructor(private taskService: TaskService) {
+    taskService.getTask().subscribe( data=>{
+      this.task = data[0];
+    });
+  }
+
   ngAfterViewInit() {    
     const editor = this.codeEditor.getEditor();
     editor.setShowPrintMargin(false);    
@@ -47,6 +57,7 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
   }
 
   initErrorEditor() {
+    TaskService
     const editor = this.codeEditor.getEditor();
 
     const responseEditor = this.errorEditor.getEditor();
@@ -64,6 +75,25 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
   }
 
   sendAnswer() {
+    this.taskService.register({
+      taskId: this.task.id,
+      code: this.task.code,
+      time: this.secondsLeft+ this.minutesLeft*60
+    }).subscribe(data=>{
+      let line = 1;
+      let errorString="";
+      data.mistakes.forEach(el=>{
+        if (el.line>line) {
+          line++;
+          errorString+="\n";
+
+        } else {
+          errorString+=el.description+"; ";
+        }
+      });
+      this.errorString = errorString;
+    });
+    
     this.isResultingPage = true;
     setTimeout(()=>this.initErrorEditor(), 0);
     clearInterval(this.timerThreadId);
