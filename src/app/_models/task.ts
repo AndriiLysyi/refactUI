@@ -3,6 +3,6 @@ export class Task {
     name: any;
     description: any;
     time: any;
-    code: any;
+    code: any = "";
     variantId: any;
 }

@@ -4,3 +4,27 @@
     width: 100%;
     overflow: auto;
   }
+
+  .code-flex-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .pull-right {
+    float: right;
+  }
+
+  .right-content {
+    margin: 20px 10px 0 0;
+  }
+
+  .timer {
+    color: darkcyan;
+  }
+
+  .editor-wide-container {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 6%;
+  }
