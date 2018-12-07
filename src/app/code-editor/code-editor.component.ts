@@ -1,5 +1,6 @@
 import { Component, ViewChild, AfterViewInit, AfterContentInit } from '@angular/core';
 import {TaskService} from '../_services/task.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import {Task} from "../_models/task";
 import {TaskResult, Mistake} from '../_models/taskResult';
 import { forEach } from '@angular/router/src/utils/collection';
@@ -44,7 +45,8 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
     console.log(e.toString());
   }
 
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService,
+    private router:Router) {
    
 
     var component = this;
@@ -97,5 +99,9 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
     setTimeout(()=>this.initErrorEditor(), 0);
     clearInterval(this.timerThreadId);
     
+  }
+
+  goToResult(){
+ this.router.navigate(['/stat']);
   }
 }
