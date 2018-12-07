@@ -22,6 +22,7 @@
     /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
        causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
     flex: 1;
+    background-color: #e9ecef;
   }
   
   .example-is-mobile .example-sidenav-container {
@@ -33,4 +34,16 @@
   .example-spacer {
     flex: 1 1 auto;
   }
+
+  .layout-flex-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .layout-flex-content {
+    flex: 0 0 100%;
+    max-width: 900px;
+  }
+  
   
