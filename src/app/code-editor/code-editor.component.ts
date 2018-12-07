@@ -32,7 +32,7 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
     }    
   }
   
-  task: Task;
+  task= new Task;
   mistakes: Mistake[];
   errorString: string ="";
   isResultingPage = false;
@@ -45,19 +45,21 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
   }
 
   constructor(private taskService: TaskService) {
+   
+
+    var component = this;
     taskService.getTask().subscribe( data=>{
-      this.task = data[0];
+      component.task = data[0];
     });
   }
 
-  ngAfterViewInit() {    
+  ngAfterViewInit() {      
     const editor = this.codeEditor.getEditor();
     editor.setShowPrintMargin(false);    
     editor.getSession().setMode("ace/mode/javascript");  
   }
 
   initErrorEditor() {
-    TaskService
     const editor = this.codeEditor.getEditor();
 
     const responseEditor = this.errorEditor.getEditor();
@@ -67,10 +69,7 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
     //synchronous scrolling
     editor.getSession().on('changeScrollTop', function(scroll) {
       responseEditor.getSession().setScrollTop(parseInt(scroll) || 0)
-    });
-    responseEditor.getSession().on('changeScrollTop', function(scroll) {
-      editor.getSession().setScrollTop(parseInt(scroll) || 0)
-    });
+    });   
     return true;
   }
 
@@ -78,7 +77,7 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
     this.taskService.register({
       taskId: this.task.id,
       code: this.task.code,
-      time: this.secondsLeft+ this.minutesLeft*60
+      time: 150 - (this.secondsLeft+ this.minutesLeft*60)
     }).subscribe(data=>{
       let line = 1;
       let errorString="";

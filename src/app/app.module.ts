@@ -1,4 +1,3 @@
-﻿;
 import { MatIconModule , MatListModule} from '@angular/material';
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
