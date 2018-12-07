@@ -32,7 +32,7 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
     }    
   }
   
-  task= new Task;
+  task = new Task();
   mistakes: Mistake[];
   errorString: string ="";
   isResultingPage = false;
@@ -49,7 +49,8 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
 
     var component = this;
     taskService.getTask().subscribe( data=>{
-      component.task = data[0];
+      let taskNumber = Math.round(Math.random()* data.length);
+      component.task = data[taskNumber];
     });
   }
 

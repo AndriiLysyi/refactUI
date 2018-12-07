@@ -13,7 +13,7 @@ export class TaskService {
 
   
   getTask() {
-      return this.http.get<Task>(`${environment.apiUrl}tasks`);
+      return this.http.get<Task[]>(`${environment.apiUrl}tasks`);
   }
 
   register(task: any) {
