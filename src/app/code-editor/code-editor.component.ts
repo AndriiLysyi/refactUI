@@ -45,19 +45,22 @@ export class CodeEditorComponent implements AfterViewInit, AfterContentInit {
   }
 
   constructor(private taskService: TaskService) {
-   
+    this.task.code = "waiting for server...";
 
-    var component = this;
-    taskService.getTask().subscribe( data=>{
-      let taskNumber = Math.round(Math.random()* data.length);
-      component.task = data[taskNumber];
-    });
+    
   }
 
   ngAfterViewInit() {      
     const editor = this.codeEditor.getEditor();
     editor.setShowPrintMargin(false);    
-    editor.getSession().setMode("ace/mode/javascript");  
+    editor.getSession().setMode("ace/mode/javascript"); 
+    
+    var component = this;
+    this.taskService.getTask().subscribe( data=>{
+      debugger
+      let taskNumber = Math.round(Math.random()* data.length);
+      component.task = data[taskNumber > data.length ? data.length : taskNumber];
+    });
   }
 
   initErrorEditor() {
