@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
+import { User } from '../_models';
 import { AlertService, UserService } from '../_services';
 
 @Component({templateUrl: 'register.component.html'})
@@ -10,6 +11,7 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
+    user : User =  {authToken:'',email:'',firstName:'',id:'',lastName:'', password:'',phoneNumber:'0000000',role:'' };
 
     constructor(
         private formBuilder: FormBuilder,
@@ -21,9 +23,10 @@ export class RegisterComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            username: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6)]]
         });
+
     }
 
     // convenience getter for easy access to form fields
@@ -37,8 +40,12 @@ export class RegisterComponent implements OnInit {
             return;
         }
 
+    this.user.firstName = this.registerForm.value.firstName;
+    this.user.lastName = this.registerForm.value.lastName;
+    this.user.password = this.registerForm.value.password;
+    this.user.email = this.registerForm.value.email;
         this.loading = true;
-        this.userService.register(this.registerForm.value)
+        this.userService.register(this.user)
             .pipe(first())
             .subscribe(
                 data => {

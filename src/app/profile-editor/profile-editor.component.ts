@@ -15,7 +15,7 @@ export class ProfileEditorComponent implements OnInit {
   profileEditorForm: FormGroup;
   loading = false;
   submitted = false;
-  user: User = { id: 0, firstName: "monster", lastName: 'Cat', password: 'asdsadww', username: 'Nagibator777' };
+  user;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,15 +25,30 @@ export class ProfileEditorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
+    this.userService.getById(this.userService.getCurrentUserId())
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.profileEditorForm.patchValue(data);
+          this.loading = false;
+          this.user = data;
+          console.log(data);
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        });
+
     this.profileEditorForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmpassword: ['', [Validators.required, Validators.minLength(6)]]
     }, { validator: this.passwordMatchValidator });
 
-    this.profileEditorForm.patchValue(this.user);
+
   }
 
   // convenience getter for easy access to form fields
@@ -58,27 +73,30 @@ export class ProfileEditorComponent implements OnInit {
       console.log('invalid');
       return;
     }
-    const tempUser: User = {
-      id: this.user.id,
-      firstName: this.profileEditorForm.value.firstName,
-      lastName: this.profileEditorForm.value.lastName,
-      password: this.profileEditorForm.value.password,
-      username: this.profileEditorForm.value.username
-    };
 
-      console.log(tempUser);
-      console.log("OKKKK");
-      // this.loading = true;
-      // this.userService.register(this.profileEditorForm.value)
-      //   .pipe(first())
-      //   .subscribe(
-      //     data => {
-      //       this.alertService.success('Registration successful', true);
-      //       this.router.navigate(['/login']);
-      //     },
-      //     error => {
-      //       this.alertService.error(error);
-      //       this.loading = false;
-      //     });
-    }
+
+    this.user.firstName = this.profileEditorForm.value.firstName;
+    this.user.lastName = this.profileEditorForm.value.lastName;
+    this.user.password = this.profileEditorForm.value.password;
+    this.user.email = this.profileEditorForm.value.email;
+
+
+    console.log(this.user);
+    console.log("OKKKK");
+    this.loading = true;
+    debugger
+    this.userService.update(this.user)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.profileEditorForm.patchValue(data);
+          this.loading = false;
+          this.router.navigate(['']);
+          debugger
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        });
   }
+}
